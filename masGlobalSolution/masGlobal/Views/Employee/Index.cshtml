@@ -1,0 +1,31 @@
+﻿
+
+<div class="container">
+    <div class="box">
+        @Html.TextBox("txtValue", null, new { placeholder = "Input Employee ID" })
+        <input type="button" value="Get Employees" id="btnStart" />
+    </div>
+    @*    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index2","Employee")'">Get Employees</button>*@
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        $('#btnStart').unbind('click');
+        $('#btnStart').on('click', function () {
+            $.ajax({
+                url: "/Employee/Index2",
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({
+                    txtValue: $("#txtValue").val()
+                }),
+                async: false
+            });
+       });
+   });
+</script>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
