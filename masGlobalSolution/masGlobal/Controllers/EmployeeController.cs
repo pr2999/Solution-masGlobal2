@@ -22,19 +22,21 @@ namespace masGlobal.Controllers
         }
 
 
-        public ActionResult employeesList(int ID)
+        public ActionResult employeesList(int? ID)
         {
-
             EmployeeBL bl = new EmployeeBL();
-
-            if (ID < 0 || ID > 2)
+            if (ID == null )
             {
                 var list = bl.GetSalaries();
                 return View(list);
             }
             else
             {
-                EmployeeViewModel employee = bl.GetSalary(ID);
+                Int16 _id = -1;
+                if (ID == null) {
+                    _id = -1;
+                } else  _id = (Int16)ID;
+                EmployeeViewModel employee = bl.GetSalary(Convert.ToInt16(_id));
                 return View("employee", employee);
             }
         }
