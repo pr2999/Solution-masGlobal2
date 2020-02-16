@@ -15,17 +15,16 @@ namespace masGlobal.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            //EmployeesApi DLayer = new EmployeesApi();
-            //List<Employee> list = DLayer.GetEmployees().ToList();
-
             return View();
         }
 
 
         public ActionResult employeesList(int? ID)
         {
+            #region llamado a capa de negocios
+
             EmployeeBL bl = new EmployeeBL();
-            if (ID == null )
+            if (ID == null)
             {
                 var list = bl.GetSalaries();
                 return View(list);
@@ -33,12 +32,16 @@ namespace masGlobal.Controllers
             else
             {
                 Int16 _id = -1;
-                if (ID == null) {
+                if (ID == null)
+                {
                     _id = -1;
-                } else  _id = (Int16)ID;
+                }
+                else _id = (Int16)ID;
                 EmployeeViewModel employee = bl.GetSalary(Convert.ToInt16(_id));
                 return View("employee", employee);
             }
+            #endregion
+
         }
 
 
@@ -61,7 +64,8 @@ namespace masGlobal.Controllers
                 var list = bl.GetSalaries();
                 return View(list);
             }
-            else {
+            else
+            {
                 EmployeeViewModel employee = bl.GetSalary(Convert.ToInt16(txtValue));
                 return View("employeesList", employee);
             }

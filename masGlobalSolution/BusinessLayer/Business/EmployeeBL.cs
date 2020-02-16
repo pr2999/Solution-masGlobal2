@@ -59,7 +59,6 @@ namespace BusinessLayer.Business
 
             List<Employee> list;
             List<EmployeeViewModel> employeesList = new List<EmployeeViewModel>();
-            //EmployeeSalary employeeSalary;
             decimal anualSalary;
             list = GetEmployees().ToList();
             foreach (var employee in list)
@@ -67,15 +66,13 @@ namespace BusinessLayer.Business
 
                 if (employee.contractTypeName == "HourlySalaryEmployee")
                 {
-                    //employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.hourlySalary);
-                    //employee.anualySalary = employeeSalary.anualSalary();
+                    // Instacia de la clase Factory
                     anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.hourlySalary, employee);
                     employee.anualySalary = anualSalary;
                 }
                 if (employee.contractTypeName == "MonthlySalaryEmployee")
                 {
-                    //employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.hourlySalary);
-                    //employee.anualySalary = employeeSalary.anualSalary(); 
+                    // Instacia de la clase Factory
                     anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.monthlySalary, employee);
                     employee.anualySalary = anualSalary;
                 }
