@@ -1,7 +1,36 @@
-﻿
-@{
-    ViewBag.Title = "employeesList";
-}
+﻿@model List<DomainLayer.EmployeeViewModel>
 
-<h2>employeesList</h2>
-
+<div class="container">
+    <hr />
+    <br />
+    <h1>Employees list</h1>
+    <table class="table-bordered" cellpadding="2" cellspacing="2" border="1">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Contract type Name</th>
+                <th>Role ID</th>
+                <th>Role name</th>
+                <th>Role description</th>
+                <th>Anualy salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.name</td>
+                    <td>@item.contractTypeName</td>
+                    <td>@item.roleId</td>
+                    <td>@item.roleName</td>
+                    <td>@item.roleDescription</td>
+                    <td>@item.anualSalary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <a href="@Url.Action("Index","Employee")" class="btn btn-primary">   Back home page </a>
+</div>

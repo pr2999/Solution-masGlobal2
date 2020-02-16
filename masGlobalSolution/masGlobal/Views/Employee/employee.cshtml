@@ -1,0 +1,81 @@
+﻿@model DomainLayer.EmployeeViewModel
+
+<hr />
+<div class="container">
+    <form id="myForm">
+        <div class="form-group">
+            <label class="control-label col-md-2" for="ID">Employee ID</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.id, new { @class = "form-control", @readonly = "true", @id = "ID" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Nombre">Name</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.name, new { @class = "form-control", @placeholder = "Name ", @id = "name" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="apellidos">Contract type name</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.contractTypeName, new { @class = "form-control", @id = "contractTypeName" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">role Id</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.roleId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Role name</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.roleName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Role description</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.roleDescription, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Anual Salary</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.anualSalary, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <br />
+                <a href="@Url.Action("Index","Employee")" class="btn btn-primary">   Back home page </a>
+            </div>
+        </div>
+    </form>>
+</div>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            var data = $("#myForm").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Employee/nuevoAlumno",
+                data: data,
+                success: function (response) {
+                    alert("Grabacion exitosa");
+                }
+            })
+        })
+    })
+</script>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

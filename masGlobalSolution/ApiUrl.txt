@@ -1,8 +1,0 @@
-http://masglobaltestapi.azurewebsites.net/api/Employees
-https://www.youtube.com/watch?v=AKKcAUNzdeA factory
-
-https://www.youtube.com/watch?v=v1B3R-kb9CU
-
-
-
-https://stackoverflow.com/questions/18873098/asp-net-mvc-get-textbox-input-value  textbox

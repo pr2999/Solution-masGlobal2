@@ -1,11 +1,12 @@
-﻿
-
-<div class="container">
+﻿<div class="container">
     <div class="box">
-        @Html.TextBox("txtValue", null, new { placeholder = "Input Employee ID" })
-        <input type="button" value="Get Employees" id="btnStart" />
+        <h2>Employees list</h2>
+        @using (Html.BeginForm("employeesList", "Employee", FormMethod.Post))
+        {
+            <input type="number" name="ID" id="ID" required/>
+            <input type="submit" value="Get Employee" />
+        }
     </div>
-    @*    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index2","Employee")'">Get Employees</button>*@
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -14,7 +15,7 @@
         $('#btnStart').unbind('click');
         $('#btnStart').on('click', function () {
             $.ajax({
-                url: "/Employee/Index2",
+                url: "/Employee/Index4",
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
@@ -23,8 +24,8 @@
                 }),
                 async: false
             });
-       });
-   });
+        });
+    });
 </script>
 
 <script src="~/Scripts/jquery.validate.min.js"></script>

@@ -1,7 +1,7 @@
 ﻿using BusinessLayer.Business;
 using DataLayer.Models;
 using DataLayer.Repository;
-
+using DomainLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,32 +21,48 @@ namespace masGlobal.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult employeesList(string txtValue)
+
+        public ActionResult employeesList(int ID)
         {
 
-            return View();
+            EmployeeBL bl = new EmployeeBL();
+
+            if (ID < 0 || ID > 2)
+            {
+                var list = bl.GetSalaries();
+                return View(list);
+            }
+            else
+            {
+                EmployeeViewModel employee = bl.GetSalary(ID);
+                return View("employee", employee);
+            }
         }
 
 
-        [HttpGet]
+        public ActionResult employee(int ID)
+        {
+            return View();
+
+        }
+
+
+
+
+        [HttpPost]
         public ActionResult Index2(string txtValue)
         {
             EmployeeBL bl = new EmployeeBL();
-            var list = bl.GetSalaries(txtValue);
-            return View();
-        }
 
-
-        public decimal anualSalary(string id)
-        {
-            //EmployeeSalary employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.hourlySalary);
-            //var salary = employeeSalary.anualSalary();
-
-            //employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.monthlySalary);
-            //salary = employeeSalary.Salary();
-
-            return 0;
+            if (txtValue == null || Convert.ToInt16(txtValue) > 2)
+            {
+                var list = bl.GetSalaries();
+                return View(list);
+            }
+            else {
+                EmployeeViewModel employee = bl.GetSalary(Convert.ToInt16(txtValue));
+                return View("employeesList", employee);
+            }
         }
     }
 }
