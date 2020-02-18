@@ -84,10 +84,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\EmployeeBL.cs" />
-    <Compile Include="Business\EmployeeSalary.cs" />
-    <Compile Include="Business\FactoryEmployee.cs" />
-    <Compile Include="Business\HourlySalary.cs" />
-    <Compile Include="Business\MonthlySalary.cs" />
+    <Compile Include="Business\Factory\CreativeClass.cs" />
+    <Compile Include="Business\Factory\Employees2.cs" />
+    <Compile Include="Business\Factory\HourlySalary.cs" />
+    <Compile Include="Business\Factory\MonthlySalary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

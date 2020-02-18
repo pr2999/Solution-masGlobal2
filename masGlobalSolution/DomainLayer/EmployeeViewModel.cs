@@ -34,6 +34,8 @@ namespace DomainLayer
 
         public string roleDescription { get; set; }
 
+        //[DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Currency)]
         public Decimal anualSalary { get; set; }
 
     }

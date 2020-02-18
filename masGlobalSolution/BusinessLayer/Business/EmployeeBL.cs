@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using DomainLayer;
+using BusinessLayer.Business.Factory;
 
 namespace BusinessLayer.Business
 {
@@ -13,7 +14,6 @@ namespace BusinessLayer.Business
     {
         private Employee GetEmployee(int id)
         {
-
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:1037/");
             var request = httpClient.GetAsync("api/Employee/?id =" + id).Result;
@@ -21,18 +21,20 @@ namespace BusinessLayer.Business
             {
                 var ResultString = request.Content.ReadAsStringAsync().Result;
                 var list = JsonConvert.DeserializeObject<List<Employee>>(ResultString);
-                Employee employee = new Employee();
-                foreach (var item in list)
-                {
-                    employee.id = item.id;
-                    employee.name = item.name;
-                    employee.roleId = item.roleId;
-                    employee.roleName = item.roleName;
-                    employee.roleDescription = item.roleDescription;
-                    employee.contractTypeName = item.contractTypeName;
-                    employee.monthlySalary = item.monthlySalary;
-                    employee.hourlySalary = item.hourlySalary;
-                }
+                var employee = (from l in list
+                          where l.id == id
+                           select new Employee {
+                               id = l.id,
+                               name =l.name,
+                               roleId = l.roleId,
+                               roleName = l.roleName,
+                               roleDescription = l.roleDescription,
+                               contractTypeName = l.contractTypeName,
+                               monthlySalary = l.monthlySalary,
+                               hourlySalary = l.hourlySalary,
+                               anualySalary = l.anualySalary
+                           }).FirstOrDefault();
+
                 return employee;
             }
             return new Employee();
@@ -40,7 +42,6 @@ namespace BusinessLayer.Business
 
         private List<Employee> GetEmployees()
         {
-
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:1037/");
             var request = httpClient.GetAsync("api/Employee").Result;
@@ -53,30 +54,14 @@ namespace BusinessLayer.Business
             return new List<Employee>();
         }
 
-
         public List<EmployeeViewModel> GetSalaries()
         {
 
             List<Employee> list;
             List<EmployeeViewModel> employeesList = new List<EmployeeViewModel>();
-            decimal anualSalary;
             list = GetEmployees().ToList();
             foreach (var employee in list)
             {
-
-                if (employee.contractTypeName == "HourlySalaryEmployee")
-                {
-                    // Instacia de la clase Factory
-                    anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.hourlySalary, employee);
-                    employee.anualySalary = anualSalary;
-                }
-                if (employee.contractTypeName == "MonthlySalaryEmployee")
-                {
-                    // Instacia de la clase Factory
-                    anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.monthlySalary, employee);
-                    employee.anualySalary = anualSalary;
-                }
-
                 EmployeeViewModel employeeViemodel = new EmployeeViewModel
                 {
                     id = employee.id,
@@ -96,21 +81,7 @@ namespace BusinessLayer.Business
         public EmployeeViewModel GetSalary(int id)
         {
 
-            //EmployeeSalary employeeSalary;
-            decimal anualSalary;
             Employee employee = GetEmployee(id);
-
-            if (employee.contractTypeName == "HourlySalaryEmployee")
-            {
-                anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.hourlySalary, employee);
-                employee.anualySalary = anualSalary;
-            }
-            if (employee.contractTypeName == "MonthlySalaryEmployee")
-            {
-                anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.monthlySalary, employee);
-                employee.anualySalary = anualSalary;
-            }
-
             EmployeeViewModel employeeViemodel = new EmployeeViewModel
             {
                 id = employee.id,
@@ -124,54 +95,5 @@ namespace BusinessLayer.Business
 
             return employeeViemodel;
         }
-
-
-        public List<EmployeeViewModel> GetSalariesOld(string id)
-        {
-
-            List<Employee> list;
-            List<EmployeeViewModel> employeesList = new List<EmployeeViewModel>();
-            //EmployeeSalary employeeSalary;
-            decimal anualSalary;
-            if (id == null)
-            {
-                list = GetEmployees().ToList();
-                foreach (var employee in list)
-                {
-
-                    if (employee.contractTypeName == "HourlySalaryEmployee")
-                    {
-                        //employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.hourlySalary);
-                        //employee.anualySalary = employeeSalary.anualSalary();
-                        anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.hourlySalary, employee);
-                        employee.anualySalary = anualSalary;
-                    }
-                    if (employee.contractTypeName == "MonthlySalaryEmployee")
-                    {
-                        //employeeSalary = FactoryEmployee.CreateEmp(FactoryEmployee.hourlySalary);
-                        //employee.anualySalary = employeeSalary.anualSalary(); 
-                        anualSalary = FactoryEmployee.GetAnualSalary(FactoryEmployee.monthlySalary, employee);
-                        employee.anualySalary = anualSalary;
-                    }
-
-                    EmployeeViewModel employeeViemodel = new EmployeeViewModel
-                    {
-                        id = employee.id,
-                        name = employee.name,
-                        contractTypeName = employee.contractTypeName,
-                        roleId = employee.roleId,
-                        roleName = employee.roleName,
-                        roleDescription = employee.roleDescription,
-                        anualSalary = employee.anualySalary,
-                    };
-
-                    employeesList.Add(employeeViemodel);
-                }
-            }
-
-            return employeesList;
-        }
-
-
     }
 }

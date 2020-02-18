@@ -18,7 +18,6 @@ namespace masGlobal.Controllers
             return View();
         }
 
-
         public ActionResult employeesList(int? ID)
         {
             #region llamado a capa de negocios
@@ -44,15 +43,11 @@ namespace masGlobal.Controllers
 
         }
 
-
         public ActionResult employee(int ID)
         {
             return View();
 
         }
-
-
-
 
         [HttpPost]
         public ActionResult Index2(string txtValue)
